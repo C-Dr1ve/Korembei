@@ -1,7 +1,7 @@
 --<< VARIABLES >>--
 local backdoored = false
 local vulnremote = nil
-local timeout = 0.32
+local timeout = 0.42
 local blacklistedstrings = {"CheatDetected", "ExploitDetected","MouseLock","MouseLoc"}
 local susstrings = {"Fire","Loadstring","Run","Code","Execute","Load","Script"}
 local remotes = {}
