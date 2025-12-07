@@ -1,9 +1,9 @@
 --<< VARIABLES >>--
 local backdoored = false
 local vulnremote = nil
-local timeout = 0.42
+local timeout = 0.32
 local blacklistedstrings = {"CheatDetected", "ExploitDetected","MouseLock","MouseLoc"}
-local susstrings = {"Fire","Loadstring","Run","Code","Execute","Load","Script"}
+local susstrings = {"Fire","Loadstring","Run","Code","Execute","Load","Script","RemoteEvent"}
 local remotes = {}
 local priority = {}
 
@@ -82,23 +82,27 @@ end
 
 print("Korembei > Scanning: "..#remotes+#priority.." remotes")
 
-for _, remote in ipairs(priority) do
-	print("Korembei > Checking priority remote: "..remote.Name)
-	if checkpayload(remote) then
-		print("Korembei > Found backdoor: "..remote.Name)
-		backdoored = true
-		vulnremote = remote
-		break
+if not backdoored then
+	for _, remote in ipairs(priority) do
+		print("Korembei > Checking priority remote: "..remote.Name)
+		if checkpayload(remote) then
+			print("Korembei > Found backdoor: "..remote.Name)
+			backdoored = true
+			vulnremote = remote
+			break
+		end
 	end
 end
 
-for _, remote in ipairs(remotes) do
-	print("Korembei > Checking remote: "..remote.Name)
-	if checkpayload(remote) then
-		print("Korembei > Found backdoor: "..remote.Name)
-		backdoored = true
-		vulnremote = remote
-		break
+if not backdoored then
+	for _, remote in ipairs(remotes) do
+		print("Korembei > Checking remote: "..remote.Name)
+		if checkpayload(remote) then
+			print("Korembei > Found backdoor: "..remote.Name)
+			backdoored = true
+			vulnremote = remote
+			break
+		end
 	end
 end
 
@@ -109,7 +113,7 @@ if backdoored then
 	remotepath.Value = vulnremote
 	print("Korembei > Booting up GUI :3")
 	task.wait(1/60)
-	loadstring(game:HttGet("https://raw.githubusercontent.com/C-Dr1ve/Korembei/refs/heads/main/ui.lua"))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/C-Dr1ve/Korembei/refs/heads/main/ui.lua"))()
 else
 	print("Korembei > No backdoor found :(")
 	return
